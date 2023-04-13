@@ -1,6 +1,6 @@
 ﻿using Raylib_cs;
 
-namespace thing;
+namespace PBase;
 
 internal static class Program
 {

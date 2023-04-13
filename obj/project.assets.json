@@ -128,9 +128,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/austin/Projects/CSharp/pbase/thing.csproj",
-      "projectName": "thing",
-      "projectPath": "/home/austin/Projects/CSharp/pbase/thing.csproj",
+      "projectUniqueName": "/home/austin/Projects/CSharp/pbase/PBase.csproj",
+      "projectName": "PBase",
+      "projectPath": "/home/austin/Projects/CSharp/pbase/PBase.csproj",
       "packagesPath": "/home/austin/.nuget/packages/",
       "outputPath": "/home/austin/Projects/CSharp/pbase/obj/",
       "projectStyle": "PackageReference",

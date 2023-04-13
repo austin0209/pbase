@@ -1,7 +1,7 @@
 using System.Numerics;
 using Raylib_cs;
 
-namespace thing;
+namespace PBase;
 
 public sealed class Player : Entity
 {

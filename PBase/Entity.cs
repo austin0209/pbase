@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace thing;
+namespace PBase;
 
 public abstract class Entity
 {
