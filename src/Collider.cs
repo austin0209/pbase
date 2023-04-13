@@ -1,7 +1,7 @@
 using System.Numerics;
 using Raylib_cs;
 
-namespace PBase;
+namespace Game;
 
 public sealed class Collider : ICloneable
 {

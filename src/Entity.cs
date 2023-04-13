@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace PBase;
+namespace Game;
 
 public abstract class Entity
 {
