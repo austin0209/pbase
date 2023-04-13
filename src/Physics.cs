@@ -3,43 +3,33 @@ using Raylib_cs;
 
 namespace Game;
 
-public sealed class Physics
+public record Physics(float Mass, Vector2 AppliedForce, Vector2 Velocity)
 {
     public const float Gravity = 5000; // Unit of acceleration.
 
-    public float Mass;
-    public Vector2 AppliedForce;
-    public Vector2 Velocity;
-
-    public Physics(float mass, Vector2 velocity, Vector2 appliedForce)
+    public Vector2 Delta
     {
-        Mass = mass;
-        Velocity = velocity;
-        AppliedForce = appliedForce;
+        get
+        {
+            var dt = Raylib.GetFrameTime();
+            return this.Velocity * dt;
+        }
     }
 
-    public Vector2 Simulated(in Vector2 initialPosition)
-    {
-        var dt = Raylib.GetFrameTime();
-        return initialPosition + Velocity * dt;
-    }
-
-    public void Step()
+    public Physics Simulated()
     {
         var dt = Raylib.GetFrameTime();
 
-        var forceGravity = Mass * Gravity;
-        AppliedForce.Y = Math.Min(AppliedForce.Y + forceGravity * dt, forceGravity);
-        Velocity += this.GetAcceleration(AppliedForce) * dt;
-    }
+        var forceGravity = this.Mass * Gravity;
+        var appliedForceY = Math.Min(AppliedForce.Y + forceGravity * dt, forceGravity);
+        var appliedForce = new Vector2(this.AppliedForce.X, appliedForceY);
+        var velocity = this.Velocity + this.GetAcceleration(this.AppliedForce) * dt;
 
-    public Physics Clone()
-    {
-        return new Physics(Mass, AppliedForce, Velocity);
+        return this with { AppliedForce = appliedForce, Velocity = velocity };
     }
 
     private Vector2 GetAcceleration(Vector2 force)
     {
-        return force / Mass;
+        return force / this.Mass;
     }
 }

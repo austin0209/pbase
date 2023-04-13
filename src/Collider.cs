@@ -3,24 +3,18 @@ using Raylib_cs;
 
 namespace Game;
 
-public sealed class Collider : ICloneable
+public record Collider(Rectangle Bounds)
 {
-    public Rectangle Bounds;
-
-    public Collider(Rectangle bounds)
-    {
-        Bounds = bounds;
-    }
+    public Vector2 Position => new Vector2(this.Bounds.x, this.Bounds.y);
 
     /// <summary>
-    ///     Gets the resolved position against the global list of colliders.
+    ///     Gets the collider against a list of colliders.
     /// </summary>
-    /// <returns> A <see cref="Vector2" /> of the resolved positions. </returns>
-    public Vector2 Resolved()
+    public Collider Resolved(List<Collider> allColliders)
     {
         var finalPosition = new Vector2(Bounds.x, Bounds.y);
 
-        foreach (var c in Program.Colliders)
+        foreach (var c in allColliders)
         {
             if (c == this)
             {
@@ -31,19 +25,13 @@ public sealed class Collider : ICloneable
             finalPosition += resolution;
         }
 
-        return finalPosition;
+        return this.WithPosition(finalPosition);
     }
 
-    public void SetPosition(Vector2 newPosition)
+    public Collider WithPosition(Vector2 newPosition)
     {
-        Bounds.x = newPosition.X;
-        Bounds.y = newPosition.Y;
-    }
-
-    public void SetPosition(float x, float y)
-    {
-        Bounds.x = x;
-        Bounds.y = y;
+        var bounds = new Rectangle(newPosition.X, newPosition.Y, this.Bounds.width, this.Bounds.height);
+        return new Collider(bounds);
     }
 
     private static Vector2 GetResolution(Rectangle a, Rectangle b)
@@ -86,10 +74,5 @@ public sealed class Collider : ICloneable
         }
 
         return resolution;
-    }
-
-    public object Clone()
-    {
-        return new Collider(new Rectangle(Bounds.x, Bounds.y, Bounds.width, Bounds.height));
     }
 }
